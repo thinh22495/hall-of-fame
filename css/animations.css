@@ -1,0 +1,119 @@
+/* ── Keyframes ── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 16px var(--card-color, #00d4ff); }
+  50%       { box-shadow: 0 0 40px var(--card-color, #00d4ff); }
+}
+
+@keyframes newCardPulse {
+  0%   { outline: 3px solid var(--card-color, #00d4ff); outline-offset: 4px; opacity: 1; }
+  100% { outline: 3px solid transparent; outline-offset: 8px; opacity: 0; }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50%       { opacity: 0.9;  transform: scale(1.3); }
+}
+
+@keyframes musicPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.15); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(40px); }
+}
+
+@keyframes spinnerRotate {
+  to { stroke-dashoffset: -60; transform: rotate(360deg); }
+}
+
+/* Confetti particles */
+@keyframes confettiFall {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes fireworkBurst {
+  0%   { transform: translate(0,0) scale(0); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(1); opacity: 0; }
+}
+
+@keyframes sparkleFloat {
+  0%   { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--dx), calc(var(--dy) - 80px)) scale(0); opacity: 0; }
+}
+
+@keyframes fallingStarSlide {
+  0%   { transform: translate(0,0) rotate(-45deg) scaleX(0); opacity: 1; }
+  50%  { transform: translate(calc(var(--dx)*0.5), calc(var(--dy)*0.5)) rotate(-45deg) scaleX(1); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) rotate(-45deg) scaleX(0); opacity: 0; }
+}
+
+@keyframes neonRing {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+}
+
+@keyframes countdownPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+/* ── Utility animation classes ── */
+.fade-in      { animation: fadeIn    0.4s ease both; }
+.fade-in-up   { animation: fadeInUp  0.5s ease both; }
+.slide-up     { animation: slideUp   0.4s ease both; }
+
+/* Stagger delays for wall cards */
+.wall-grid .mini-card:nth-child(1)  { animation-delay: 0.05s; }
+.wall-grid .mini-card:nth-child(2)  { animation-delay: 0.10s; }
+.wall-grid .mini-card:nth-child(3)  { animation-delay: 0.15s; }
+.wall-grid .mini-card:nth-child(4)  { animation-delay: 0.20s; }
+.wall-grid .mini-card:nth-child(5)  { animation-delay: 0.25s; }
+.wall-grid .mini-card:nth-child(6)  { animation-delay: 0.30s; }
+.wall-grid .mini-card:nth-child(7)  { animation-delay: 0.35s; }
+.wall-grid .mini-card:nth-child(8)  { animation-delay: 0.40s; }
+.wall-grid .mini-card:nth-child(9)  { animation-delay: 0.45s; }
+.wall-grid .mini-card:nth-child(10) { animation-delay: 0.50s; }
+.wall-grid .mini-card:nth-child(11) { animation-delay: 0.55s; }
+.wall-grid .mini-card:nth-child(12) { animation-delay: 0.60s; }
+
+/* Spinner */
+.spinner {
+  width: 18px; height: 18px;
+  animation: spinnerRotate 0.8s linear infinite;
+  transform-origin: center;
+}

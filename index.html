@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VHEC 10 Years – Đại sảnh Danh vọng & Bức tường Tri ân</title>
+  <meta name="description" content="Kỷ niệm 10 năm hành trình VHEC – Wall of Fame & Gratitude" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/form.css" />
+  <link rel="stylesheet" href="css/card.css" />
+  <link rel="stylesheet" href="css/wall.css" />
+
+  <!-- CDN Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- ── TOPBAR ── -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="logo-text">VHEC</span>
+      <span class="logo-badge">10 Years</span>
+    </div>
+    <div class="topbar-right">
+      <button id="langToggle" class="btn-icon" aria-label="Đổi ngôn ngữ">
+        <span id="langLabel">VN</span>
+      </button>
+      <button id="musicToggle" class="btn-icon" aria-label="Bật/tắt nhạc nền">
+        <svg class="icon-music" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18V5l12-2v13"/>
+          <circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── HERO SECTION ── -->
+  <section id="hero" class="hero">
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
+      <div id="particles" class="particles"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge" data-i18n="hero.badge">2016 – 2026 · 10 Years</div>
+      <h1 class="hero-title" data-i18n="hero.title">Đại sảnh Danh vọng<br/>&amp; Bức tường Tri ân</h1>
+      <p class="hero-subtitle" data-i18n="hero.subtitle">Mỗi hành trình 10 năm đều được tạo nên từ những con người tuyệt vời.</p>
+      <div class="hero-counter">
+        <span class="counter-num" id="daysCounter">3,650</span>
+        <span class="counter-label" data-i18n="hero.counterLabel">ngày đồng hành</span>
+      </div>
+      <div id="countdown" class="hero-countdown"></div>
+      <div class="hero-cta">
+        <button class="btn-primary" id="ctaCreate" data-i18n="hero.ctaCreate">✨ Tạo dấu ấn của bạn</button>
+        <button class="btn-secondary" id="ctaWall" data-i18n="hero.ctaWall">🏆 Xem Bức tường Tri ân</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS BAR ── -->
+  <section id="stats" class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num" data-target="10" data-suffix="">10</span>
+      <span class="stat-label" data-i18n="stats.years">Năm đồng hành</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" data-target="0" data-suffix="+" id="memberCount">—</span>
+      <span class="stat-label" data-i18n="stats.members">Thành viên để lại dấu ấn</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" data-target="200" data-suffix="+">200+</span>
+      <span class="stat-label" data-i18n="stats.projects">Dự án hoàn thành</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" data-target="50" data-suffix="+">50+</span>
+      <span class="stat-label" data-i18n="stats.customers">Khách hàng tin tưởng</span>
+    </div>
+  </section>
+
+  <!-- ── FORM SECTION ── -->
+  <section id="form-section" class="form-section">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="form.sectionTitle">✦ Để lại Dấu ấn của bạn</h2>
+      <p class="section-sub" data-i18n="form.sectionSub">Chia sẻ hành trình của bạn tại VHEC</p>
+    </div>
+    <form id="hofForm" class="hof-form" novalidate>
+
+      <!-- Tên -->
+      <div class="form-group">
+        <label for="iName" data-i18n="form.name">Họ và tên</label>
+        <input type="text" id="iName" name="name" autocomplete="name"
+               data-i18n-placeholder="form.namePlaceholder" placeholder="Nguyễn Văn A" />
+        <span class="field-error" id="errName"></span>
+      </div>
+
+      <!-- Vai trò -->
+      <div class="form-group">
+        <label for="iRole" data-i18n="form.role">Vai trò của bạn</label>
+        <select id="iRole" name="role">
+          <option value="" data-i18n="form.rolePlaceholder">── Chọn vai trò ──</option>
+          <optgroup label="── Kỹ thuật">
+            <option value="Frontend Developer">Frontend Developer</option>
+            <option value="Backend Developer">Backend Developer</option>
+            <option value="Fullstack Developer">Fullstack Developer</option>
+            <option value="Mobile Developer">Mobile Developer</option>
+            <option value="DevOps Engineer">DevOps Engineer</option>
+            <option value="Data Engineer">Data Engineer</option>
+            <option value="QA Engineer">QA Engineer</option>
+          </optgroup>
+          <optgroup label="── Thiết kế / Sản phẩm">
+            <option value="UI/UX Designer">UI/UX Designer</option>
+            <option value="Product Manager">Product Manager</option>
+            <option value="Project Manager">Project Manager</option>
+            <option value="Business Analyst">Business Analyst</option>
+            <option value="Scrum Master">Scrum Master</option>
+          </optgroup>
+          <optgroup label="── Vận hành / Hỗ trợ">
+            <option value="Hành chính">Hành chính</option>
+            <option value="Nhân sự (HR)">Nhân sự (HR)</option>
+            <option value="Kế toán">Kế toán</option>
+            <option value="Office Manager">Office Manager</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Sales">Sales</option>
+          </optgroup>
+        </select>
+        <span class="field-error" id="errRole"></span>
+      </div>
+
+      <!-- Năm gia nhập -->
+      <div class="form-group">
+        <label for="iYear" data-i18n="form.year">Năm gia nhập</label>
+        <input type="number" id="iYear" name="year" min="2016" max="2026"
+               data-i18n-placeholder="form.yearPlaceholder" placeholder="2020" />
+        <span class="field-error" id="errYear"></span>
+      </div>
+
+      <!-- Avatar color -->
+      <div class="form-group">
+        <label data-i18n="form.avatarColor">Màu avatar</label>
+        <div class="color-picker" id="colorPicker">
+          <button type="button" class="color-swatch active" data-color="#00d4ff" style="background:#00d4ff" aria-label="Cyan"></button>
+          <button type="button" class="color-swatch" data-color="#a855f7" style="background:#a855f7" aria-label="Purple"></button>
+          <button type="button" class="color-swatch" data-color="#f59e0b" style="background:#f59e0b" aria-label="Gold"></button>
+          <button type="button" class="color-swatch" data-color="#22c55e" style="background:#22c55e" aria-label="Green"></button>
+          <button type="button" class="color-swatch" data-color="#f43f5e" style="background:#f43f5e" aria-label="Rose"></button>
+          <button type="button" class="color-swatch" data-color="#fb923c" style="background:#fb923c" aria-label="Orange"></button>
+        </div>
+      </div>
+
+      <!-- Milestone -->
+      <div class="form-group">
+        <label for="iMilestone" data-i18n="form.milestone">Milestone đáng nhớ <span class="required">*</span></label>
+        <textarea id="iMilestone" name="milestone" rows="3"
+                  data-i18n-placeholder="form.milestonePlaceholder"
+                  placeholder="Điều bạn nhớ nhất trong hành trình tại VHEC..."></textarea>
+        <span class="field-error" id="errMilestone"></span>
+      </div>
+
+      <!-- Thank you -->
+      <div class="form-group">
+        <label for="iThankYou" data-i18n="form.thankYou">Lời cảm ơn gửi team / công ty</label>
+        <textarea id="iThankYou" name="thankYou" rows="3"
+                  data-i18n-placeholder="form.thankYouPlaceholder"
+                  placeholder="Cảm ơn những người đã đồng hành..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <span class="btn-text" data-i18n="form.submit">🎖️ Tạo Hall of Fame Card</span>
+        <span class="btn-loading" hidden>
+          <svg class="spinner" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="60" stroke-dashoffset="20"/></svg>
+          <span data-i18n="form.saving">Đang lưu dấu ấn...</span>
+        </span>
+      </button>
+    </form>
+  </section>
+
+  <!-- ── HALL OF FAME CARD SECTION ── -->
+  <section id="hof-section" class="hof-section" hidden>
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="card.sectionTitle">🎖️ Hall of Fame Card của bạn</h2>
+    </div>
+    <div id="hof-card" class="hof-card">
+      <!-- Rendered by render.js -->
+    </div>
+    <div class="hof-actions">
+      <button class="btn-action" id="btnDownload">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span data-i18n="card.download">Download Card</span>
+      </button>
+      <button class="btn-action" id="btnShare">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <span data-i18n="card.share">Chia sẻ</span>
+      </button>
+      <button class="btn-action" id="btnEdit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        <span data-i18n="card.edit">Chỉnh sửa</span>
+      </button>
+      <button class="btn-action" id="btnViewWall">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span data-i18n="card.viewWall">Xem trên Tường</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ── THANK YOU WALL ── -->
+  <section id="wall-section" class="wall-section">
+    <div class="wall-header">
+      <h2 class="section-title" data-i18n="wall.title">✦ Bức tường Tri ân</h2>
+      <p class="section-sub" data-i18n="wall.subtitle">Những ngôi sao sáng của VHEC</p>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar" id="filterBar">
+      <div class="filter-pills">
+        <button class="pill active" data-group="all" data-i18n="wall.filterAll">Tất cả</button>
+        <button class="pill" data-group="tech" data-i18n="wall.filterTech">⚡ Kỹ thuật</button>
+        <button class="pill" data-group="design" data-i18n="wall.filterDesign">🎨 Thiết kế</button>
+        <button class="pill" data-group="ops" data-i18n="wall.filterOps">🏢 Vận hành</button>
+      </div>
+      <div class="filter-controls">
+        <select id="sortSelect" class="filter-select">
+          <option value="newest" data-i18n="wall.sortNewest">Mới nhất</option>
+          <option value="oldest" data-i18n="wall.sortOldest">Cũ nhất</option>
+          <option value="name" data-i18n="wall.sortName">Tên A–Z</option>
+          <option value="year" data-i18n="wall.sortYear">Năm gia nhập</option>
+        </select>
+        <input type="search" id="searchInput" class="filter-search"
+               data-i18n-placeholder="wall.searchPlaceholder" placeholder="Tìm tên..." />
+      </div>
+      <div class="filter-count" id="wallCount"></div>
+    </div>
+
+    <!-- Wall grid -->
+    <div class="wall-grid" id="wallGrid"></div>
+
+    <!-- Infinite scroll sentinel -->
+    <div id="wallSentinel" class="wall-sentinel"></div>
+
+    <!-- Empty state -->
+    <div id="wallEmpty" class="wall-empty" hidden>
+      <div class="empty-star">✦</div>
+      <p data-i18n="wall.empty">Hãy là ngôi sao đầu tiên trên bức tường này!</p>
+      <button class="btn-primary" id="emptyCtaBtn" data-i18n="wall.emptyCta">✨ Tạo dấu ấn ngay</button>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-logo">
+      <span class="logo-text">VHEC</span>
+      <span class="footer-years">2016 – 2026 · 10 Years Together</span>
+    </div>
+    <p class="footer-tagline" data-i18n="footer.tagline">Được xây dựng với 💙 bởi chính những người VHEC</p>
+    <button class="btn-top" id="backToTop" data-i18n="footer.backTop">↑ Về đầu trang</button>
+  </footer>
+
+  <!-- ── MODAL ── -->
+  <div id="modal" class="modal-overlay" hidden aria-modal="true" role="dialog">
+    <div class="modal-content" id="modalContent">
+      <button class="modal-close" id="modalClose" aria-label="Đóng">✕</button>
+      <!-- Populated by render.js -->
+    </div>
+  </div>
+
+  <!-- ── TOAST ── -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- ── CONFETTI CONTAINER ── -->
+  <div id="confettiContainer" class="confetti-container" aria-hidden="true"></div>
+
+  <!-- ── AUDIO ── -->
+  <audio id="bgMusic" src="assets/audio/hanh-trinh-10-nam-cung-nhau-v2.mp3" loop preload="auto"></audio>
+
+  <!-- Scripts (module order matters) -->
+  <script src="js/config.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/share.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

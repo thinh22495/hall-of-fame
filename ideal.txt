@@ -1,0 +1,295 @@
+## 🎯 Chủ đề
+Website kỷ niệm 10 năm công ty IT VHEC với concept:
+"10 Years Together – Wall of Fame & Gratitude"
+
+Mục tiêu:
+- Tôn vinh hành trình 10 năm
+- Tạo trải nghiệm cá nhân hóa cho từng nhân viên
+- Gắn kết tinh thần đồng đội
+- Deploy qua Vercel
+- Người dùng có thể vào xem lại, sửa, tạo mới
+
+---
+
+## 🎨 Phong cách giao diện
+- Dark mode hiện đại
+- Tông màu xanh công nghệ (#0ff, #38bdf8), glow nhẹ
+- Phong cách IT / futuristic – gợi cảm giác control room, starship
+- Responsive cho desktop và mobile
+- Animation fade-in nhẹ khi card xuất hiện
+- Font hiện đại, dễ đọc (Inter hoặc Space Grotesk + JetBrains Mono cho số/năm)
+- Layout single-page scroll
+
+Màu sắc theo nhóm vai trò:
+- Kỹ thuật       → xanh cyan   (#00d4ff)
+- Thiết kế/SP    → tím         (#a855f7)
+- Vận hành/HT    → vàng cam   (#f59e0b)
+
+---
+
+## 📐 Cấu trúc trang
+
+### 1) Hero Section
+Layout:
+- Góc trên phải: nút bật/tắt nhạc nền (icon âm thanh, animate khi đang phát) + nút đổi ngôn ngữ VN | JP
+- Background: lưới grid pixel mờ + gradient động nhẹ (xanh navy → đen) + star particles nhỏ (canvas hoặc CSS thuần)
+
+Nội dung:
+- Badge nhỏ trên đầu: "2016 – 2026 · 10 Years"
+- Tiêu đề lớn: "Đại sảnh Danh vọng & Bức tường Tri ân"
+- Subtitle: "Mỗi hành trình 10 năm đều được tạo nên từ những con người tuyệt vời."
+- Counter: "3,650 ngày đồng hành" (và đồng hồ đếm ngược tới ngày kỷ niệm 16/05/2026)
+- Hai nút CTA song song:
+  + Primary:   "✨ Tạo dấu ấn của bạn"    → scroll xuống form
+  + Secondary: "🏆 Xem Bức tường Tri ân"  → scroll xuống wall section
+
+---
+
+### 2) Stats Bar (giữa Hero và Form)
+Thanh số liệu nhanh, dùng IntersectionObserver để count-up animate khi cuộn vào:
+- 10   — Năm đồng hành
+- [N]  — Thành viên để lại dấu ấn   ← lấy từ Supabase COUNT
+- [N]  — Dự án hoàn thành            ← hardcode / config
+- [N]  — Khách hàng tin tưởng        ← hardcode / config
+
+---
+
+### 3) Form Section
+Form nhập thông tin:
+- Họ tên (text, required, min 2 ký tự)
+- Vị trí công việc (dropdown, required):
+    <optgroup label="── Kỹ thuật">
+      Frontend Developer, Backend Developer, Fullstack Developer,
+      Mobile Developer, DevOps Engineer, Data Engineer, QA Engineer
+    </optgroup>
+    <optgroup label="── Thiết kế / Sản phẩm">
+      UI/UX Designer, Product Manager, Project Manager,
+      Business Analyst, Scrum Master
+    </optgroup>
+    <optgroup label="── Vận hành / Hỗ trợ">
+      Hành chính, Nhân sự (HR), Kế toán, Office Manager, Marketing, Sales
+    </optgroup>
+- Năm gia nhập (number, 2016–2026, required)
+- Chọn màu avatar (5–6 màu glow preset theo nhóm vai trò) — tự động initials từ tên
+- Milestone đáng nhớ (textarea, required, min 20 ký tự)
+  placeholder: "Điều bạn nhớ nhất trong hành trình tại VHEC..."
+- Lời cảm ơn gửi team / công ty (textarea, optional)
+  placeholder: "Cảm ơn những người đã đồng hành..."
+
+Validation (inline, không dùng alert):
+- Bắt buộc: tên, vai trò, năm gia nhập, milestone
+- Năm: 2016–2026
+- Hiển thị border đỏ + message lỗi ngay dưới field
+
+Nút submit:
+- "🎖️ Tạo Hall of Fame Card"
+- Loading state: spinner + "Đang lưu dấu ấn..."
+
+---
+
+### 4) Hall of Fame Card Section
+Sau submit → render card nổi bật ở giữa (max-width 480px, centered).
+
+Card hiển thị:
+- Avatar initials (tròn, màu glow người dùng chọn)
+- Badge góc phải: "Hall of Fame 2026"
+- Tên (lớn, glow nhẹ)
+- Vai trò · Năm gia nhập · [số năm] năm cống hiến
+- Milestone (trong khung quote có icon " ")
+- Lời cảm ơn (italic, màu nhạt hơn)
+- Footer: "💙 Cảm ơn bạn đã là một phần của hành trình 10 năm VHEC"
+- Timestamp nhỏ góc dưới
+
+Style:
+- Border-radius lớn (20px)
+- Glow border theo màu vai trò (cyan / tím / vàng)
+- Gradient nền card (dark + tint màu nhóm)
+- Fade-in + slide-up khi xuất hiện
+- Hiệu ứng pháo hoa khi card xuất hiện — random từ preset:
+  confetti / fireworks / sparkle / falling-stars / neon-burst
+
+Nút dưới card:
+- "📸 Download Card"   → html2canvas → PNG
+- "📤 Chia sẻ"         → navigator.share hoặc copy clipboard
+- "✏️ Chỉnh sửa"       → điền lại form với data hiện tại
+- "👁️ Xem trên Tường"  → scroll + highlight card trong wall
+
+Text share:
+"✨ Tôi vừa để lại dấu ấn trên Bức tường Tri ân 10 năm VHEC! 💙
+#VHEC10Years #10YearsTogether"
+
+---
+
+### 5) Thank You Wall Section — "Bức tường Tri ân"
+
+**Concept trực quan:**
+Hình dung như một bầu trời đêm: mỗi nhân viên là một ngôi sao sáng,
+cùng nhau tạo thành chòm sao của công ty.
+
+**Nền section:**
+- Background đen sâu với star particle CSS cố định (không cần canvas)
+- Tiêu đề section: "✦ Bức tường Tri ân" + subtext "Những ngôi sao sáng của VHEC"
+
+**Filter & Sort bar (dính trên cùng khi cuộn):**
+- Pill buttons lọc nhóm: [Tất cả] [⚡ Kỹ thuật] [🎨 Thiết kế] [🏢 Vận hành]
+- Dropdown: Sắp xếp [Mới nhất | Cũ nhất | Tên A–Z | Năm gia nhập]
+- Ô tìm kiếm tên (debounce 300ms)
+- Counter nhỏ: "Hiển thị X / Y dấu ấn"
+
+**Layout grid (Masonry offset):**
+- Desktop: 3 cột, hàng chẵn dịch xuống ~20px so với hàng lẻ → cảm giác organic
+- Tablet: 2 cột
+- Mobile: 1 cột
+- Mỗi card cùng kích thước, khoảng cách đều, không random chiều cao
+  (giữ clean, tránh rối mắt)
+
+**Mỗi mini-card:**
+┌─────────────────────────────┐
+│  [Avatar]  Nguyễn Văn A      │  ← tên, font lớn nhẹ
+│            Frontend Dev      │  ← badge màu theo nhóm
+│            Từ năm 2018 · 7 năm │  ← nhỏ, mờ
+│  ─────────────────────────  │
+│  " Milestone ngắn 2 dòng... │  ← ellipsis, hover tooltip full
+│  💙 Có lời cảm ơn           │  ← chỉ icon nếu có thankYou
+│                          ··· │  ← nút menu (Xem / Sửa / Xóa*)
+└─────────────────────────────┘
+(*Xóa chỉ hiện nếu là card của mình — nhận biết qua localStorage ID)
+
+Hover effect:
+- Card nâng nhẹ (translateY -4px)
+- Glow border sáng hơn (theo màu nhóm)
+- Các card lân cận mờ đi nhẹ để focus vào card đang hover
+
+Click card → mở Modal xem đầy đủ:
+- Overlay tối
+- Nội dung đầy đủ như Hall of Fame card
+- Nút Download + Chia sẻ trong modal
+- Đóng bằng click ngoài hoặc nút X
+
+**Load dữ liệu:**
+- Load 12 card đầu khi mở trang
+- Infinite scroll: tự load thêm khi cuộn gần cuối
+- Skeleton loading (3–6 placeholder card) khi đang fetch
+
+**Empty state (chưa có ai):**
+- Hình minh họa ngôi sao mờ
+- Text: "Hãy là ngôi sao đầu tiên trên bức tường này!"
+- Nút: "✨ Tạo dấu ấn ngay"
+
+**Append card mới:**
+- Card vừa tạo xuất hiện đầu tiên trong wall với hiệu ứng glow pulse 2s
+- Các card cũ dịch xuống nhẹ (animate)
+
+---
+
+### 6) Footer
+- Logo VHEC + "2016 – 2026 · 10 Years Together"
+- Tagline: "Được xây dựng với 💙 bởi chính những người VHEC"
+- Link scroll về đầu trang
+
+---
+
+## 💾 Data Layer
+
+**Supabase (primary):**
+Table: `hall_of_fame_entries`
+```
+id            uuid        PK, default gen_random_uuid()
+name          text        NOT NULL
+role          text        NOT NULL
+role_group    text        NOT NULL   -- 'tech' | 'design' | 'ops'
+year          integer     NOT NULL   CHECK (year BETWEEN 2016 AND 2026)
+milestone     text        NOT NULL
+thank_you     text
+avatar_color  text                   -- hex màu glow đã chọn
+created_at    timestamptz DEFAULT now()
+updated_at    timestamptz
+```
+RLS policy:
+- SELECT: public (tất cả đọc được)
+- INSERT: public (ai cũng tạo được)
+- UPDATE/DELETE: chỉ khi client gửi đúng id (lưu id trong localStorage)
+
+**LocalStorage (secondary / fallback):**
+Key: `vhec_wall_of_fame_entries`
+Chỉ lưu danh sách `{ id, name, role, year }` của máy hiện tại
+→ nhận diện "card của mình" để hiện nút Sửa/Xóa
+→ Nếu Supabase lỗi → fallback render từ localStorage
+
+---
+
+## 📤 Share / Download
+1. "📸 Download Card"
+   - html2canvas chụp Hall of Fame card → PNG
+   - Filename: `VHEC-10Years-[Tên]-[Năm].png`
+
+2. "📤 Chia sẻ"
+   - navigator.share nếu browser hỗ trợ
+   - Fallback: copy text → toast "Đã copy vào clipboard!"
+
+---
+
+## ✨ Hiệu ứng & Animation
+- Smooth scroll (CSS scroll-behavior: smooth)
+- Fade-in + slide-up khi section vào viewport (IntersectionObserver)
+- Hover card: translateY -4px + glow shadow tăng
+- Button: glow pulse khi hover
+- Hero background: gradient động CSS @keyframes
+- Star particles: CSS animation thuần (không cần lib nặng)
+- Count-up number cho Stats bar
+- Confetti random từ preset khi tạo card thành công
+- Toast notification góc dưới phải (copy/share/save)
+- Glow pulse 2s cho card mới trong wall
+- Skeleton loading cho wall khi đang fetch
+
+---
+
+## 🧹 Yêu cầu code
+
+Functions chính:
+- `saveEntry(data)`              → POST Supabase, fallback localStorage
+- `loadEntries(filter, page)`   → GET Supabase, fallback localStorage
+- `renderHallOfFameCard(entry)` → render full card sau submit
+- `renderThankYouWall(entries)` → render toàn bộ wall
+- `appendCardToWall(entry)`     → prepend card mới + animate
+- `highlightCard(id)`           → scroll + pulse highlight trong wall
+- `openEntryModal(entry)`       → mở modal xem đầy đủ
+- `downloadCard()`              → html2canvas → PNG
+- `shareEntry(entry)`           → navigator.share / clipboard
+- `filterWall(filters)`         → lọc + re-render wall
+- `initCountUp()`               → animate Stats bar
+- `initI18n(lang)`              → load JSON + apply text
+
+Cấu trúc file:
+```
+├── index.html
+├── css/
+│   ├── main.css          # Reset, variables (--color-*, --glow-*, --radius-*)
+│   ├── hero.css
+│   ├── form.css
+│   ├── card.css          # Hall of Fame card
+│   ├── wall.css          # Thank You Wall + modal + skeleton
+│   └── animations.css
+├── js/
+│   ├── config.js         # Supabase URL/key, constants, role→group map
+│   ├── i18n.js           # Đa ngôn ngữ
+│   ├── db.js             # saveEntry, loadEntries (Supabase + localStorage)
+│   ├── render.js         # renderHallOfFameCard, renderThankYouWall, modal
+│   ├── effects.js        # Confetti presets, particles, countUp, toast
+│   ├── share.js          # downloadCard, shareEntry
+│   └── main.js           # Init, event listeners
+├── locales/
+│   ├── vi.json           # Tiếng Việt
+│   └── ja.json           # Tiếng Nhật
+└── assets/
+    ├── audio/            # Nhạc nền ambient/lo-fi
+    └── sprites/          # SVG icons, logo VHEC
+```
+
+Quy tắc:
+- Vanilla JS + CSS thuần, không dùng framework
+- Thư viện cho phép: html2canvas CDN, Supabase JS CDN
+- Comment ngắn cho mỗi function và section HTML chính
+- CSS custom properties để dễ thay đổi theme
+- Không inline style trong HTML
+- Sẵn sàng deploy Vercel (static site, env vars qua vercel.json)

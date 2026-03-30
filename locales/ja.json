@@ -1,0 +1,94 @@
+{
+  "hero": {
+    "badge": "2016 – 2026 · 10周年",
+    "title": "殿堂入り\n& 感謝の壁",
+    "subtitle": "10年間の旅は、素晴らしい人々によって築かれました。",
+    "counterLabel": "日間の歩み",
+    "ctaCreate": "✨ あなたの軌跡を残す",
+    "ctaWall": "🏆 感謝の壁を見る",
+    "countdownDays": "日",
+    "countdownHours": "時間",
+    "countdownMins": "分",
+    "countdownSecs": "秒",
+    "countdownDone": "🎉 VHECの10周年記念日が来ました！"
+  },
+  "stats": {
+    "years": "年間の歩み",
+    "members": "メンバーが軌跡を残した",
+    "projects": "完了したプロジェクト",
+    "customers": "信頼するお客様"
+  },
+  "form": {
+    "sectionTitle": "✦ あなたの軌跡を残す",
+    "sectionSub": "VHECでの歩みをシェアしてください",
+    "name": "お名前",
+    "namePlaceholder": "山田 太郎",
+    "role": "あなたの役職",
+    "rolePlaceholder": "── 役職を選択 ──",
+    "year": "入社年",
+    "yearPlaceholder": "2016 – 2026",
+    "avatarColor": "アバターカラー",
+    "milestone": "印象的なマイルストーン",
+    "milestonePlaceholder": "VHECでの一番の思い出は...",
+    "thankYou": "チームへの感謝の言葉",
+    "thankYouPlaceholder": "共に歩んでくれた人たちへ感謝...",
+    "submit": "🎖️ 殿堂カードを作成",
+    "saving": "保存しています...",
+    "errName": "お名前を入力してください（2文字以上）",
+    "errRole": "役職を選択してください",
+    "errYear": "入社年は2016年から2026年の間で入力してください",
+    "errMilestone": "マイルストーンを入力してください（20文字以上）"
+  },
+  "card": {
+    "sectionTitle": "🎖️ あなたの殿堂カード",
+    "badge": "殿堂入り 2026",
+    "yearsLabel": "年間の貢献",
+    "joinedLabel": "入社年",
+    "footer": "💙 VHECの10年間の旅の一部でいてくれてありがとう",
+    "download": "カードをダウンロード",
+    "share": "シェアする",
+    "edit": "編集",
+    "viewWall": "壁で見る"
+  },
+  "wall": {
+    "title": "✦ 感謝の壁",
+    "subtitle": "VHECの輝く星たち",
+    "filterAll": "すべて",
+    "filterTech": "⚡ エンジニア",
+    "filterDesign": "🎨 デザイン",
+    "filterOps": "🏢 オペレーション",
+    "sortNewest": "最新順",
+    "sortOldest": "古い順",
+    "sortName": "名前 A–Z",
+    "sortYear": "入社年",
+    "searchPlaceholder": "名前を検索...",
+    "countLabel": "表示中",
+    "countOf": "/",
+    "countSuffix": "件",
+    "menuView": "全文を見る",
+    "menuEdit": "編集",
+    "menuDelete": "削除",
+    "thanksIcon": "💙 感謝メッセージあり",
+    "yearFrom": "入社",
+    "yearServed": "年",
+    "empty": "この壁に最初の星になりましょう！",
+    "emptyCta": "✨ 今すぐ軌跡を残す",
+    "deleteConfirm": "この軌跡を削除してもよろしいですか？",
+    "loadMore": "もっと見る"
+  },
+  "footer": {
+    "tagline": "VHECのメンバー自身によって 💙 を込めて作られました",
+    "backTop": "↑ ページトップへ"
+  },
+  "toast": {
+    "saved": "✅ 軌跡が保存されました！",
+    "saveError": "❌ 保存に失敗しました。再試行してください。",
+    "copied": "📋 クリップボードにコピーしました！",
+    "downloaded": "📸 画像のダウンロードが完了しました！",
+    "deleted": "🗑️ 軌跡を削除しました。",
+    "deleteError": "❌ 削除できませんでした。後でお試しください。"
+  },
+  "share": {
+    "text": "✨ VHECの10周年感謝の壁に軌跡を残しました！ 💙\n#VHEC10Years #10YearsTogether"
+  }
+}

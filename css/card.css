@@ -1,0 +1,147 @@
+/* ── Hall of Fame Card ── */
+.hof-card {
+  --card-color: #00d4ff;
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: linear-gradient(
+    135deg,
+    rgba(13,26,46,0.95) 0%,
+    rgba(5,10,20,0.98) 100%
+  );
+  border: 1.5px solid var(--card-color);
+  border-radius: var(--radius-card);
+  padding: 36px 32px 28px;
+  box-shadow: 0 0 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+  animation: glowPulse 3s ease-in-out infinite, slideUp 0.5s ease both;
+  overflow: hidden;
+}
+/* Tint overlay based on card-color */
+.hof-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top left, rgba(var(--card-color-rgb, 0,212,255), 0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Badge top-right */
+.hof-badge {
+  position: absolute;
+  top: 20px; right: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--card-color);
+  border: 1px solid var(--card-color);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+  background: rgba(0,0,0,0.4);
+}
+
+/* Avatar + name row */
+.hof-identity {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.hof-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--card-color);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-hero);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #000;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px var(--card-color);
+}
+.hof-name-group { flex: 1; min-width: 0; }
+.hof-name {
+  font-family: var(--font-hero);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  word-break: break-word;
+}
+.hof-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.hof-role-badge {
+  display: inline-flex;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(var(--card-color-rgb, 0,212,255), 0.15);
+  color: var(--card-color);
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px solid rgba(var(--card-color-rgb, 0,212,255), 0.35);
+}
+.hof-sep { color: var(--color-border); }
+
+/* Milestone quote */
+.hof-milestone {
+  position: relative;
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid var(--card-color);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+.hof-quote-icon {
+  font-size: 2rem;
+  color: var(--card-color);
+  opacity: 0.25;
+  position: absolute;
+  top: 6px; left: 14px;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+.hof-milestone-text {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.6;
+  padding-left: 8px;
+}
+
+/* Thank you */
+.hof-thankyou {
+  font-style: italic;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Footer */
+.hof-footer {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  border-top: 1px solid var(--color-border);
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.hof-footer-main { color: var(--color-cyan); }
+.hof-timestamp { opacity: 0.5; font-size: 0.65rem; }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .hof-card { padding: 28px 20px 22px; }
+  .hof-avatar { width: 52px; height: 52px; font-size: 1.1rem; }
+  .hof-name { font-size: 1.2rem; }
+}

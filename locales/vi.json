@@ -1,0 +1,94 @@
+{
+  "hero": {
+    "badge": "2016 – 2026 · 10 Years",
+    "title": "Đại sảnh Danh vọng\n& Bức tường Tri ân",
+    "subtitle": "Mỗi hành trình 10 năm đều được tạo nên từ những con người tuyệt vời.",
+    "counterLabel": "ngày đồng hành",
+    "ctaCreate": "✨ Tạo dấu ấn của bạn",
+    "ctaWall": "🏆 Xem Bức tường Tri ân",
+    "countdownDays": "Ngày",
+    "countdownHours": "Giờ",
+    "countdownMins": "Phút",
+    "countdownSecs": "Giây",
+    "countdownDone": "🎉 Kỷ niệm 10 năm VHEC đã đến!"
+  },
+  "stats": {
+    "years": "Năm đồng hành",
+    "members": "Thành viên để lại dấu ấn",
+    "projects": "Dự án hoàn thành",
+    "customers": "Khách hàng tin tưởng"
+  },
+  "form": {
+    "sectionTitle": "✦ Để lại Dấu ấn của bạn",
+    "sectionSub": "Chia sẻ hành trình của bạn tại VHEC",
+    "name": "Họ và tên",
+    "namePlaceholder": "Nguyễn Văn A",
+    "role": "Vai trò của bạn",
+    "rolePlaceholder": "── Chọn vai trò ──",
+    "year": "Năm gia nhập",
+    "yearPlaceholder": "2016 – 2026",
+    "avatarColor": "Màu avatar",
+    "milestone": "Milestone đáng nhớ",
+    "milestonePlaceholder": "Điều bạn nhớ nhất trong hành trình tại VHEC...",
+    "thankYou": "Lời cảm ơn gửi team / công ty",
+    "thankYouPlaceholder": "Cảm ơn những người đã đồng hành...",
+    "submit": "🎖️ Tạo Hall of Fame Card",
+    "saving": "Đang lưu dấu ấn...",
+    "errName": "Vui lòng nhập họ tên (ít nhất 2 ký tự)",
+    "errRole": "Vui lòng chọn vai trò của bạn",
+    "errYear": "Năm gia nhập phải từ 2016 đến 2026",
+    "errMilestone": "Vui lòng chia sẻ milestone (ít nhất 20 ký tự)"
+  },
+  "card": {
+    "sectionTitle": "🎖️ Hall of Fame Card của bạn",
+    "badge": "Hall of Fame 2026",
+    "yearsLabel": "năm cống hiến",
+    "joinedLabel": "Từ năm",
+    "footer": "💙 Cảm ơn bạn đã là một phần của hành trình 10 năm VHEC",
+    "download": "Download Card",
+    "share": "Chia sẻ",
+    "edit": "Chỉnh sửa",
+    "viewWall": "Xem trên Tường"
+  },
+  "wall": {
+    "title": "✦ Bức tường Tri ân",
+    "subtitle": "Những ngôi sao sáng của VHEC",
+    "filterAll": "Tất cả",
+    "filterTech": "⚡ Kỹ thuật",
+    "filterDesign": "🎨 Thiết kế",
+    "filterOps": "🏢 Vận hành",
+    "sortNewest": "Mới nhất",
+    "sortOldest": "Cũ nhất",
+    "sortName": "Tên A–Z",
+    "sortYear": "Năm gia nhập",
+    "searchPlaceholder": "Tìm tên...",
+    "countLabel": "Hiển thị",
+    "countOf": "/",
+    "countSuffix": "dấu ấn",
+    "menuView": "Xem đầy đủ",
+    "menuEdit": "Chỉnh sửa",
+    "menuDelete": "Xóa",
+    "thanksIcon": "💙 Có lời cảm ơn",
+    "yearFrom": "Từ năm",
+    "yearServed": "năm",
+    "empty": "Hãy là ngôi sao đầu tiên trên bức tường này!",
+    "emptyCta": "✨ Tạo dấu ấn ngay",
+    "deleteConfirm": "Bạn có chắc muốn xóa dấu ấn này?",
+    "loadMore": "Xem thêm"
+  },
+  "footer": {
+    "tagline": "Được xây dựng với 💙 bởi chính những người VHEC",
+    "backTop": "↑ Về đầu trang"
+  },
+  "toast": {
+    "saved": "✅ Dấu ấn đã được lưu!",
+    "saveError": "❌ Lỗi khi lưu. Vui lòng thử lại.",
+    "copied": "📋 Đã copy vào clipboard!",
+    "downloaded": "📸 Đã tải ảnh thành công!",
+    "deleted": "🗑️ Đã xóa dấu ấn.",
+    "deleteError": "❌ Không thể xóa. Thử lại sau."
+  },
+  "share": {
+    "text": "✨ Tôi vừa để lại dấu ấn trên Bức tường Tri ân 10 năm VHEC! 💙\n#VHEC10Years #10YearsTogether"
+  }
+}
