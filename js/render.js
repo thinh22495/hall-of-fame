@@ -45,28 +45,39 @@ function renderHallOfFameCard(entry) {
   applyCardColor(card, color);
 
   card.innerHTML = `
-    <div class="hof-badge">${badgeText}</div>
-    <div class="hof-identity">
-      <div class="hof-avatar">${initials}</div>
-      <div class="hof-name-group">
-        <div class="hof-name">${escHtml(entry.name)}</div>
-        <div class="hof-meta">
+    <div class="hof-card-inner">
+      <div class="hof-accent-strip">
+        <span class="hof-accent-num">10</span>
+        <span class="hof-accent-label">YEARS</span>
+      </div>
+      <div class="hof-content">
+        <div class="hof-topbar">
+          <span class="hof-logo">VHEC</span>
+          <span class="hof-badge">${badgeText}</span>
+        </div>
+        <div class="hof-separator"></div>
+        <div class="hof-center">
+          <div class="hof-avatar">${initials}</div>
+          <div class="hof-name">${escHtml(entry.name)}</div>
           <span class="hof-role-badge">${escHtml(entry.role)}</span>
-          <span class="hof-sep">·</span>
-          <span>${t('card.joinedLabel')} ${entry.year}</span>
-          <span class="hof-sep">·</span>
-          <span>${years} ${t('card.yearsLabel')}</span>
+          <div class="hof-meta">
+            <span>${t('card.joinedLabel')} ${entry.year}</span>
+            <span class="hof-sep">·</span>
+            <span>${years} ${t('card.yearsLabel')}</span>
+          </div>
+        </div>
+        <div class="hof-milestone">
+          <span class="hof-milestone-label">D\u1EA4U \u1EA4N C\u00C1 NH\u00C2N</span>
+          <span class="hof-quote-icon">\u201C</span>
+          <div class="hof-milestone-text">${escHtml(entry.milestone)}</div>
+        </div>
+        ${entry.thank_you ? `<div class="hof-thankyou"><span class="hof-thankyou-label">L\u1EDCi nh\u1EAFn</span>${escHtml(entry.thank_you)}</div>` : ''}
+        <div class="hof-ornament">\u2500\u2500 \u2726 \u2500\u2500</div>
+        <div class="hof-footer">
+          <div class="hof-footer-main">${t('card.footer')}</div>
+          <div class="hof-timestamp">${fmtDate(entry.created_at)}</div>
         </div>
       </div>
-    </div>
-    <div class="hof-milestone">
-      <span class="hof-quote-icon">"</span>
-      <div class="hof-milestone-text">${escHtml(entry.milestone)}</div>
-    </div>
-    ${entry.thank_you ? `<div class="hof-thankyou">${escHtml(entry.thank_you)}</div>` : ''}
-    <div class="hof-footer">
-      <div class="hof-footer-main">${t('card.footer')}</div>
-      <div class="hof-timestamp">${fmtDate(entry.created_at)}</div>
     </div>
   `;
 
@@ -78,8 +89,8 @@ function renderHallOfFameCard(entry) {
   // Lưu entry hiện tại cho các nút action
   section.dataset.entryId = entry.id;
 
-  // Phóng confetti
-  setTimeout(() => launchConfetti(), 300);
+  // Phóng confetti liên tục cho đến khi user click/scroll
+  setTimeout(() => launchConfettiLoop(), 300);
 }
 
 // ── Thank You Wall ──
@@ -188,8 +199,8 @@ function buildMiniCard(entry) {
     <button class="mc-menu-btn" aria-label="Menu" data-id="${entry.id}">···</button>
     <div class="mc-menu" id="menu-${entry.id}">
       <button class="mc-menu-item" data-action="view" data-id="${entry.id}">${t('wall.menuView')}</button>
+      <button class="mc-menu-item" data-action="edit" data-id="${entry.id}">${t('wall.menuEdit')}</button>
       ${isMine ? `
-        <button class="mc-menu-item" data-action="edit" data-id="${entry.id}">${t('wall.menuEdit')}</button>
         <button class="mc-menu-item danger" data-action="delete" data-id="${entry.id}">${t('wall.menuDelete')}</button>
       ` : ''}
     </div>
@@ -301,12 +312,12 @@ function openModal(entry) {
   content.innerHTML = `
     <button class="modal-close" id="modalClose" aria-label="Đóng">✕</button>
     <div style="--card-color:${color};--card-color-rgb:${HEX_RGB_MAP[color]||'0,212,255'}">
-      <div class="hof-identity" style="margin-bottom:20px">
-        <div class="hof-avatar" style="background:${color};box-shadow:0 0 16px ${color}">${initials}</div>
-        <div class="hof-name-group">
-          <div class="hof-name">${escHtml(entry.name)}</div>
-          <div class="hof-meta">
-            <span class="hof-role-badge" style="background:rgba(var(--card-color-rgb),0.15);color:${color};border-color:rgba(var(--card-color-rgb),0.35)">${escHtml(entry.role)}</span>
+      <div style="display:flex;align-items:center;gap:18px;margin-bottom:20px">
+        <div class="hof-avatar" style="width:72px;height:72px;font-size:1.5rem;background:${color};box-shadow:0 0 0 3px #0d1a2e,0 0 0 5px rgba(var(--card-color-rgb),0.5),0 0 20px rgba(var(--card-color-rgb),0.4)">${initials}</div>
+        <div style="flex:1;min-width:0">
+          <div class="hof-name" style="font-size:1.3rem">${escHtml(entry.name)}</div>
+          <div class="hof-meta" style="margin-top:6px">
+            <span class="hof-role-badge">${escHtml(entry.role)}</span>
             <span class="hof-sep">·</span>
             <span>${t('card.joinedLabel')} ${entry.year}</span>
             <span class="hof-sep">·</span>
@@ -314,11 +325,12 @@ function openModal(entry) {
           </div>
         </div>
       </div>
-      <div class="hof-milestone" style="border-left-color:${color};margin-bottom:16px">
-        <span class="hof-quote-icon">"</span>
+      <div class="hof-milestone" style="text-align:left;margin-top:0;margin-bottom:12px">
+        <span class="hof-milestone-label">D\u1EA4U \u1EA4N C\u00C1 NH\u00C2N</span>
+        <span class="hof-quote-icon">\u201C</span>
         <div class="hof-milestone-text">${escHtml(entry.milestone)}</div>
       </div>
-      ${entry.thank_you ? `<div class="hof-thankyou">${escHtml(entry.thank_you)}</div>` : ''}
+      ${entry.thank_you ? `<div class="hof-thankyou"><span class="hof-thankyou-label">L\u1EDCi nh\u1EAFn</span>${escHtml(entry.thank_you)}</div>` : ''}
       <div class="hof-footer" style="margin-top:16px">
         <div class="hof-footer-main">${t('card.footer')}</div>
         <div class="hof-timestamp">${fmtDate(entry.created_at)}</div>

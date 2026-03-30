@@ -60,7 +60,7 @@ const HEX_RGB_MAP = {
 };
 
 // Preset hiệu ứng confetti (random mỗi lần)
-const CONFETTI_PRESETS = ['confetti', 'fireworks', 'sparkle', 'falling-stars', 'neon-burst'];
+const CONFETTI_PRESETS = ['confetti', 'fireworks', 'sparkle', 'neon-burst'];
 
 // LocalStorage keys
 const LS_ENTRIES = 'vhec_wall_of_fame_entries';   // fallback full data

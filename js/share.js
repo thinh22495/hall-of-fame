@@ -22,12 +22,20 @@ async function downloadCard() {
       });
     }
 
+    // Tạm tắt animation để capture sạch
+    card.style.animation = 'none';
+
     const canvas = await html2canvas(card, {
       backgroundColor: '#050a14',
       scale: 2,
       useCORS: true,
       logging: false,
+      width: card.scrollWidth,
+      height: card.scrollHeight,
     });
+
+    // Restore animation
+    card.style.animation = '';
 
     const name = card.querySelector('.hof-name')?.textContent?.trim() || 'VHEC';
     const year = new Date().getFullYear();

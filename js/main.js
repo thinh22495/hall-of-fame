@@ -31,6 +31,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ── 2. Hero CTAs ──
   document.getElementById('ctaCreate')?.addEventListener('click', () => {
+    // Reset form về chế độ thêm mới
+    _editingId = null;
+    document.getElementById('hofForm')?.reset();
+    document.querySelectorAll('.color-swatch').forEach((s, i) => s.classList.toggle('active', i === 0));
+    _selectedColor = '#00d4ff';
     document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
   });
   document.getElementById('ctaWall')?.addEventListener('click', () => {

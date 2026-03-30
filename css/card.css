@@ -1,147 +1,339 @@
-/* ── Hall of Fame Card ── */
+/* ── Hall of Fame Card – Premium Award Style ── */
 .hof-card {
   --card-color: #00d4ff;
+  --card-color-rgb: 0,212,255;
   position: relative;
-  width: 100%;
-  max-width: 480px;
+  width: 540px;
+  max-width: 100%;
   background: linear-gradient(
-    135deg,
-    rgba(13,26,46,0.95) 0%,
-    rgba(5,10,20,0.98) 100%
+    160deg,
+    #0a0f1e 0%,
+    #060b18 40%,
+    #0d1528 100%
   );
-  border: 1.5px solid var(--card-color);
-  border-radius: var(--radius-card);
-  padding: 36px 32px 28px;
-  box-shadow: 0 0 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
-  animation: glowPulse 3s ease-in-out infinite, slideUp 0.5s ease both;
+  border: 2px solid var(--card-color);
+  border-radius: 16px;
   overflow: hidden;
-}
-/* Tint overlay based on card-color */
-.hof-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at top left, rgba(var(--card-color-rgb, 0,212,255), 0.06) 0%, transparent 60%);
-  pointer-events: none;
+  /* Triple-frame: inner glow, gap, 2nd border, gap, 3rd border, outer glow */
+  box-shadow:
+    inset 0 0 40px rgba(var(--card-color-rgb), 0.08),
+    inset 0 0 80px rgba(0,0,0,0.3),
+    0 0 0 4px #050a14,
+    0 0 0 5px rgba(var(--card-color-rgb), 0.4),
+    0 0 0 9px #050a14,
+    0 0 0 10px rgba(var(--card-color-rgb), 0.15),
+    0 0 40px rgba(var(--card-color-rgb), 0.2),
+    0 0 80px rgba(var(--card-color-rgb), 0.1);
+  animation: glowPulse 3s ease-in-out infinite, slideUp 0.5s ease both;
 }
 
-/* Badge top-right */
-.hof-badge {
+/* ── Inner grid: accent strip + content ── */
+.hof-card-inner {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  height: 100%;
+  position: relative;
+  /* Subtle dot-grid texture */
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='0.6' fill='rgba(255,255,255,0.025)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* Corner brackets – top-right & bottom-left */
+.hof-card-inner::before,
+.hof-card-inner::after {
+  content: '';
   position: absolute;
-  top: 20px; right: 20px;
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  width: 24px;
+  height: 24px;
+  border-color: rgba(var(--card-color-rgb), 0.3);
+  border-style: solid;
+  z-index: 2;
+  pointer-events: none;
+}
+.hof-card-inner::before {
+  top: 14px; right: 14px;
+  border-width: 1.5px 1.5px 0 0;
+}
+.hof-card-inner::after {
+  bottom: 14px; left: 70px;
+  border-width: 0 0 1.5px 1.5px;
+}
+
+/* ── Left accent strip ── */
+.hof-accent-strip {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--card-color-rgb), 0.12) 0%,
+    rgba(var(--card-color-rgb), 0.03) 100%
+  );
+  border-right: 1px solid rgba(var(--card-color-rgb), 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 20px 0;
+}
+.hof-accent-num {
+  font-family: var(--font-hero);
+  font-size: 2rem;
+  font-weight: 800;
   color: var(--card-color);
-  border: 1px solid var(--card-color);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.hof-accent-label {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(var(--card-color-rgb), 0.5);
+  text-transform: uppercase;
+}
+
+/* ── Content area ── */
+.hof-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 30px 24px;
+  overflow: hidden;
+}
+
+/* Corner brackets – top-left & bottom-right (on content) */
+.hof-content::before,
+.hof-content::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: rgba(var(--card-color-rgb), 0.3);
+  border-style: solid;
+  z-index: 2;
+  pointer-events: none;
+}
+.hof-content::before {
+  top: 14px; left: 14px;
+  border-width: 1.5px 0 0 1.5px;
+}
+.hof-content::after {
+  bottom: 14px; right: 14px;
+  border-width: 0 1.5px 1.5px 0;
+}
+
+/* ── Top bar: logo + badge ── */
+.hof-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.hof-logo {
+  font-family: var(--font-hero);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--card-color);
+  letter-spacing: 0.08em;
+}
+.hof-badge {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--card-color);
+  border: 1px solid rgba(var(--card-color-rgb), 0.35);
   border-radius: var(--radius-pill);
   padding: 3px 10px;
   background: rgba(0,0,0,0.4);
 }
 
-/* Avatar + name row */
-.hof-identity {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 24px;
+/* Separator */
+.hof-separator {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--card-color-rgb), 0.3) 50%,
+    transparent 100%
+  );
+  margin-bottom: 16px;
 }
+
+/* ── Center block: avatar + identity ── */
+.hof-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 3px;
+  margin-bottom: 6px;
+}
+
+/* Avatar – large with double ring */
 .hof-avatar {
-  width: 64px; height: 64px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   background: var(--card-color);
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-hero);
-  font-size: 1.4rem;
+  font-size: 1.7rem;
   font-weight: 800;
   color: #000;
   flex-shrink: 0;
-  box-shadow: 0 0 20px var(--card-color);
+  box-shadow:
+    0 0 0 3px #060b18,
+    0 0 0 5px rgba(var(--card-color-rgb), 0.5),
+    0 0 28px rgba(var(--card-color-rgb), 0.4);
+  margin-bottom: 10px;
 }
-.hof-name-group { flex: 1; min-width: 0; }
+
 .hof-name {
   font-family: var(--font-hero);
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   font-weight: 800;
   color: #fff;
   line-height: 1.2;
   word-break: break-word;
+  letter-spacing: 0.01em;
 }
-.hof-meta {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--color-muted);
-  margin-top: 4px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  align-items: center;
-}
+
 .hof-role-badge {
   display: inline-flex;
-  padding: 2px 10px;
+  padding: 4px 16px;
   border-radius: var(--radius-pill);
-  background: rgba(var(--card-color-rgb, 0,212,255), 0.15);
+  background: rgba(var(--card-color-rgb), 0.12);
   color: var(--card-color);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  border: 1px solid rgba(var(--card-color-rgb, 0,212,255), 0.35);
+  border: 1px solid rgba(var(--card-color-rgb), 0.3);
+  margin-top: 6px;
+}
+
+.hof-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 4px;
 }
 .hof-sep { color: var(--color-border); }
 
-/* Milestone quote */
+/* ── Milestone quote block ── */
 .hof-milestone {
   position: relative;
-  background: rgba(255,255,255,0.03);
-  border-left: 3px solid var(--card-color);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  padding: 16px 20px;
-  margin-bottom: 16px;
+  background: rgba(var(--card-color-rgb), 0.05);
+  border: 1px solid rgba(var(--card-color-rgb), 0.15);
+  border-radius: 12px;
+  padding: 18px 22px 16px;
+  margin-top: 12px;
+  text-align: center;
+}
+.hof-milestone-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(var(--card-color-rgb), 0.4);
+  text-transform: uppercase;
+  margin-bottom: 8px;
 }
 .hof-quote-icon {
-  font-size: 2rem;
-  color: var(--card-color);
-  opacity: 0.25;
-  position: absolute;
-  top: 6px; left: 14px;
   font-family: Georgia, serif;
-  line-height: 1;
+  font-size: 2.2rem;
+  color: var(--card-color);
+  opacity: 0.22;
+  line-height: 0.5;
+  display: block;
+  margin-bottom: 8px;
 }
 .hof-milestone-text {
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.85);
-  line-height: 1.6;
-  padding-left: 8px;
-}
-
-/* Thank you */
-.hof-thankyou {
-  font-style: italic;
   font-size: 0.88rem;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.6;
-  margin-bottom: 20px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.7;
+  font-style: italic;
 }
 
-/* Footer */
+/* ── Thank you – framed ── */
+.hof-thankyou {
+  position: relative;
+  background: rgba(var(--card-color-rgb), 0.03);
+  border: 1px solid rgba(var(--card-color-rgb), 0.10);
+  border-left: 3px solid rgba(var(--card-color-rgb), 0.35);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 18px;
+  margin-top: 10px;
+  font-style: italic;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.65;
+  text-align: left;
+}
+.hof-thankyou-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(var(--card-color-rgb), 0.4);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* ── Ornament divider ── */
+.hof-ornament {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: rgba(var(--card-color-rgb), 0.3);
+  letter-spacing: 0.3em;
+  margin-top: 16px;
+  padding-top: 0;
+}
+
+/* ── Footer ── */
 .hof-footer {
   text-align: center;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   color: var(--color-muted);
-  border-top: 1px solid var(--color-border);
-  padding-top: 16px;
+  padding-top: 6px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
-.hof-footer-main { color: var(--color-cyan); }
-.hof-timestamp { opacity: 0.5; font-size: 0.65rem; }
+.hof-footer-main {
+  color: var(--card-color);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+}
+.hof-timestamp {
+  opacity: 0.45;
+  font-size: 0.6rem;
+}
 
 /* ── Responsive ── */
-@media (max-width: 480px) {
-  .hof-card { padding: 28px 20px 22px; }
-  .hof-avatar { width: 52px; height: 52px; font-size: 1.1rem; }
+@media (max-width: 600px) {
+  .hof-card {
+    width: 100%;
+    max-width: 420px;
+  }
+  .hof-card-inner {
+    grid-template-columns: 44px 1fr;
+  }
+  .hof-accent-num { font-size: 1.6rem; }
+  .hof-accent-label { font-size: 0.45rem; }
+  .hof-content { padding: 20px 18px 16px; }
+  .hof-avatar { width: 66px; height: 66px; font-size: 1.4rem; }
   .hof-name { font-size: 1.2rem; }
+  .hof-milestone { padding: 14px 16px; }
+  .hof-thankyou { padding: 12px 14px; }
+  .hof-card-inner::after { left: 56px; }
 }
