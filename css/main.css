@@ -95,17 +95,29 @@ a { color: inherit; text-decoration: none; }
 .btn-icon {
   display: flex; align-items: center; justify-content: center;
   width: 38px; height: 38px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.22);
   border-radius: 50%;
-  color: var(--color-text);
+  color: #e2e8f0;
   transition: var(--transition);
   font-size: 0.75rem;
   font-family: var(--font-mono);
   font-weight: 700;
+  letter-spacing: 0;
 }
-.btn-icon:hover { border-color: var(--color-cyan); color: var(--color-cyan); box-shadow: var(--glow-cyan); }
-.btn-icon svg { width: 18px; height: 18px; }
+.btn-icon:hover {
+  background: rgba(0,212,255,0.12);
+  border-color: var(--color-cyan);
+  color: var(--color-cyan);
+  box-shadow: var(--glow-cyan);
+}
+.btn-icon svg {
+  width: 18px; height: 18px;
+  stroke: currentColor;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+.btn-icon.playing { border-color: var(--color-cyan); color: var(--color-cyan); }
 .btn-icon.playing svg { animation: musicPulse 1.5s ease-in-out infinite; }
 
 /* ── Section shared ── */

@@ -250,6 +250,29 @@
   background: var(--color-border);
   margin-bottom: 12px;
 }
+/* Lời cảm ơn — nội dung chính của card tri ân */
+.mc-thankyou {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+/* Milestone — phụ, nhỏ hơn, chỉ hiện khi có cả 2 */
+.mc-milestone-small {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+/* Milestone — nội dung chính khi không có lời cảm ơn */
 .mc-milestone {
   font-size: 0.85rem;
   color: rgba(255,255,255,0.65);
@@ -258,14 +281,6 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-bottom: 10px;
-}
-.mc-thanks-icon {
-  font-size: 0.78rem;
-  color: var(--color-muted);
-  display: flex;
-  align-items: center;
-  gap: 4px;
 }
 
 /* ── Skeleton Loading ── */

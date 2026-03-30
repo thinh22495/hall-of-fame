@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (_played) return;
     const hint = document.createElement('div');
     hint.id = 'musicHint';
-    hint.textContent = '🎵 Chạm bất kỳ để bật nhạc';
+    hint.textContent = '🎵';
     hint.style.cssText = `
       position:fixed;bottom:80px;right:24px;z-index:9999;
       background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.35);

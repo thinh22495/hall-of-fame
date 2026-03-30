@@ -194,8 +194,11 @@ function buildMiniCard(entry) {
       ` : ''}
     </div>
     <div class="mc-divider"></div>
-    <div class="mc-milestone">${escHtml(entry.milestone)}</div>
-    ${entry.thank_you ? `<div class="mc-thanks-icon">💙 ${t('wall.thanksIcon').replace('💙 ','')}</div>` : ''}
+    ${entry.thank_you
+      ? `<div class="mc-thankyou">${escHtml(entry.thank_you)}</div>
+         <div class="mc-milestone-small">✦ ${escHtml(entry.milestone)}</div>`
+      : `<div class="mc-milestone">${escHtml(entry.milestone)}</div>`
+    }
   `;
 
   // Click card body → open modal (không click menu)

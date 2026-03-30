@@ -35,6 +35,10 @@ function applyLang() {
     const val = getNestedKey(_translations, key);
     if (val !== undefined) el.placeholder = val;
   });
+  // Re-render wall cards (nội dung JS-generated, không có data-i18n)
+  if (typeof renderThankYouWall === 'function' && _wallEntries?.length) {
+    renderThankYouWall(_wallEntries, _wallTotal);
+  }
 }
 
 /** Lấy key lồng nhau: "hero.title" → translations.hero.title */
