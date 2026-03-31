@@ -20,6 +20,33 @@ function initParticles() {
   }
 }
 
+/** Tạo sao lấp lánh cho background wall section */
+function initWallStars() {
+  const container = document.getElementById('wallStars');
+  if (!container) return;
+  const colors = [
+    { c: '#ffffff', g: '5px' },
+    { c: '#00d4ff', g: '8px' },
+    { c: '#a855f7', g: '8px' },
+    { c: '#f59e0b', g: '6px' },
+    { c: '#22c55e', g: '6px' },
+  ];
+  for (let i = 0; i < 400; i++) {
+    const star = document.createElement('span');
+    star.className = 'wall-star';
+    const size  = Math.random() * 3 + 1;
+    const pick  = colors[Math.floor(Math.random() * colors.length)];
+    star.style.setProperty('--size',  `${size}px`);
+    star.style.setProperty('--dur',   `${Math.random() * 5 + 2}s`);
+    star.style.setProperty('--delay', `${Math.random() * 8}s`);
+    star.style.setProperty('--color', pick.c);
+    star.style.setProperty('--glow',  pick.g);
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.top  = `${Math.random() * 100}%`;
+    container.appendChild(star);
+  }
+}
+
 // ── Confetti Presets ──
 
 const _confettiColors = ['#00d4ff','#a855f7','#f59e0b','#22c55e','#f43f5e','#fb923c','#fff'];

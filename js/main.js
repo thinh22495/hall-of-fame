@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initSupabase();
   await initI18n();
   initParticles();
+  initWallStars();
   initCountdown();
   initAllCountUps();
 

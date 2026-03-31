@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -n \"initParticles\\\\|particles\\\\|starfield\\\\|star\" d:/Code/hall-of-fame/js/*.js)",
+      "Bash(grep -n \"\\\\.star\" d:/Code/hall-of-fame/css/*.css)"
+    ]
+  }
+}
