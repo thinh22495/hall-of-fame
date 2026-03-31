@@ -48,9 +48,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
   });
 
-  // ── 3. Đổi ngôn ngữ ── (dùng _currentLang từ i18n.js, không đọc text label)
-  document.getElementById('langToggle')?.addEventListener('click', () => {
-    loadLang(_currentLang === 'vi' ? 'ja' : 'vi');
+  // ── 3. Đổi ngôn ngữ ──
+  document.getElementById('langToggle')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.lang-option');
+    if (!btn) return;
+    loadLang(btn.dataset.lang);
   });
 
   // ── 4. Nhạc nền ──

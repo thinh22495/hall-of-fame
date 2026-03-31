@@ -13,9 +13,10 @@ async function loadLang(lang) {
     localStorage.setItem('vhec_lang', lang);
     applyLang();
     document.documentElement.lang = lang;
-    // Hiển thị đúng nhãn: vi→VN, ja→JP
-    const LANG_LABELS = { vi: 'VN', ja: 'JP' };
-    document.getElementById('langLabel').textContent = LANG_LABELS[lang] || lang.toUpperCase();
+    // Cập nhật trạng thái active trên toggle pill
+    document.querySelectorAll('.lang-option').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
   } catch {
     console.warn(`[i18n] Không tải được ngôn ngữ: ${lang}`);
   }
