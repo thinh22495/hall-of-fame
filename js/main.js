@@ -146,8 +146,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       let entry;
       if (_editingId) {
         entry = await updateEntry(_editingId, data);
-        // Cập nhật mini-card trong wall
-        const existing = document.querySelector(`.mini-card[data-id="${_editingId}"]`);
+        // Cập nhật hex cell trong wall
+        const existing = document.querySelector(`.hex-cell[data-id="${_editingId}"]`);
         if (existing) existing.replaceWith(buildMiniCard(entry));
         // Cập nhật trong _wallEntries
         const idx = _wallEntries.findIndex(e => e.id === _editingId);
@@ -211,36 +211,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     _searchTimer = setTimeout(() => setWallFilter({ search: e.target.value }), 300);
   });
 
-  // ── 9. Wall: Mini-card menu (event delegation) ──
-  document.getElementById('wallGrid')?.addEventListener('click', async (e) => {
-    // Toggle menu ···
-    const menuBtn = e.target.closest('.mc-menu-btn');
-    if (menuBtn) {
-      e.stopPropagation();
-      const id   = menuBtn.dataset.id;
-      const menu = document.getElementById(`menu-${id}`);
-      document.querySelectorAll('.mc-menu.open').forEach(m => { if (m !== menu) m.classList.remove('open'); });
-      menu?.classList.toggle('open');
-      return;
-    }
-
-    // Action trong menu
-    const item = e.target.closest('.mc-menu-item');
-    if (item) {
-      e.stopPropagation();
-      const action = item.dataset.action;
-      const id     = item.dataset.id;
-      const entry  = _wallEntries.find(en => en.id === id);
-      document.querySelectorAll('.mc-menu.open').forEach(m => m.classList.remove('open'));
-      if (action === 'view'   && entry) openModal(entry);
-      if (action === 'edit')            _fillFormForEdit(id);
-      if (action === 'delete')          await _handleDelete(id);
-    }
-  });
-
-  // Đóng menu khi click ngoài
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.mc-menu.open').forEach(m => m.classList.remove('open'));
+  // ── 9. Re-render hex grid khi đổi breakpoint ──
+  let _hexBreakpoint = _getHexBP();
+  function _getHexBP() {
+    return window.innerWidth <= 560 ? 'sm' : window.innerWidth <= 900 ? 'md' : 'lg';
+  }
+  window.addEventListener('resize', () => {
+    const bp = _getHexBP();
+    if (bp !== _hexBreakpoint) { _hexBreakpoint = bp; loadWall(); }
   });
 
   // ── 10. Modal ──
@@ -306,7 +284,12 @@ async function _handleDelete(id) {
   if (!confirm(t('wall.deleteConfirm'))) return;
   try {
     await deleteEntry(id);
-    document.querySelector(`.mini-card[data-id="${id}"]`)?.remove();
+    const hexCard = document.querySelector(`.hex-cell[data-id="${id}"]`);
+    if (hexCard) {
+      const row = hexCard.closest('.hex-row');
+      hexCard.remove();
+      if (row && row.children.length === 0) row.remove();
+    }
     // Cập nhật state trong render.js
     const idx = _wallEntries.findIndex(e => e.id === id);
     if (idx !== -1) _wallEntries.splice(idx, 1);

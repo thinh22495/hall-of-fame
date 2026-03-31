@@ -112,24 +112,23 @@
   50%       { opacity: 0.6; }
 }
 
+@keyframes hexNewPulse {
+  0%, 100% {
+    filter: drop-shadow(0 2px 8px rgba(var(--card-color-rgb, 0,212,255), 0.2));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 24px rgba(var(--card-color-rgb, 0,212,255), 0.85))
+      drop-shadow(0 0 48px rgba(var(--card-color-rgb, 0,212,255), 0.4));
+  }
+}
+
 /* ── Utility animation classes ── */
 .fade-in      { animation: fadeIn    0.4s ease both; }
 .fade-in-up   { animation: fadeInUp  0.5s ease both; }
 .slide-up     { animation: slideUp   0.4s ease both; }
 
-/* Stagger delays for wall cards */
-.wall-grid .mini-card:nth-child(1)  { animation-delay: 0.05s; }
-.wall-grid .mini-card:nth-child(2)  { animation-delay: 0.10s; }
-.wall-grid .mini-card:nth-child(3)  { animation-delay: 0.15s; }
-.wall-grid .mini-card:nth-child(4)  { animation-delay: 0.20s; }
-.wall-grid .mini-card:nth-child(5)  { animation-delay: 0.25s; }
-.wall-grid .mini-card:nth-child(6)  { animation-delay: 0.30s; }
-.wall-grid .mini-card:nth-child(7)  { animation-delay: 0.35s; }
-.wall-grid .mini-card:nth-child(8)  { animation-delay: 0.40s; }
-.wall-grid .mini-card:nth-child(9)  { animation-delay: 0.45s; }
-.wall-grid .mini-card:nth-child(10) { animation-delay: 0.50s; }
-.wall-grid .mini-card:nth-child(11) { animation-delay: 0.55s; }
-.wall-grid .mini-card:nth-child(12) { animation-delay: 0.60s; }
+/* Stagger delays for hex cells (set inline via JS per index) */
 
 /* Spinner */
 .spinner {

@@ -28,6 +28,13 @@ function fmtDate(isoString) {
   } catch { return ''; }
 }
 
+/** Số hex cell mỗi row theo viewport */
+function getHexPerRow() {
+  if (window.innerWidth <= 560) return 2;
+  if (window.innerWidth <= 900) return 3;
+  return 4;
+}
+
 // ── Hall of Fame Card ──
 
 /**
@@ -153,7 +160,35 @@ async function loadWall() {
 }
 
 /**
- * Render danh sách mini-card vào wall grid.
+ * Thêm hex cell vào cuối grid, tạo row mới nếu cần.
+ * @param {HTMLElement} grid
+ * @param {Object} entry
+ * @param {number} [animIdx]
+ */
+function _addHexCellToGrid(grid, entry, animIdx) {
+  const perRow = getHexPerRow();
+  const rows = grid.querySelectorAll('.hex-row');
+  let lastRow = rows[rows.length - 1];
+
+  if (!lastRow || lastRow.children.length >= perRow) {
+    const rowIdx = rows.length;
+    lastRow = document.createElement('div');
+    lastRow.className = `hex-row${rowIdx % 2 !== 0 ? ' hex-row-offset' : ''}`;
+    // Hàng trên có z-index cao hơn → render đè lên hàng dưới
+    // Tạo hiệu ứng tổ ong: hàng dưới chỉ hiện trong khoảng trống tam giác của hàng trên
+    lastRow.style.zIndex = 500 - rowIdx;
+    grid.appendChild(lastRow);
+  }
+
+  const cell = buildMiniCard(entry);
+  if (animIdx !== undefined) {
+    cell.style.animationDelay = `${Math.min(animIdx * 0.05, 0.6)}s`;
+  }
+  lastRow.appendChild(cell);
+}
+
+/**
+ * Render danh sách hex cell vào wall grid.
  */
 function renderThankYouWall(entries, total) {
   const grid  = document.getElementById('wallGrid');
@@ -166,83 +201,70 @@ function renderThankYouWall(entries, total) {
     return;
   }
   empty.hidden = true;
-  entries.forEach(entry => {
-    grid.appendChild(buildMiniCard(entry));
+  entries.forEach((entry, i) => {
+    _addHexCellToGrid(grid, entry, i);
   });
   updateWallCount(entries.length, total);
 }
 
 /**
- * Tạo DOM element mini-card.
+ * Tạo DOM element hex cell cho wall.
  */
 function buildMiniCard(entry) {
   const group    = entry.role_group || ROLE_GROUP_MAP[entry.role] || 'tech';
   const color    = entry.avatar_color || GROUP_COLOR[group];
   const initials = getInitials(entry.name);
   const years    = calcYears(entry.year);
-  const isMine   = isMyEntry(entry.id);
 
-  const card = document.createElement('div');
-  card.className = 'mini-card fade-in-up';
-  card.dataset.id = entry.id;
-  applyCardColor(card, color);
+  const cell = document.createElement('div');
+  cell.className = 'hex-cell';
+  cell.dataset.id = entry.id;
+  cell.style.setProperty('--card-color', color);
+  cell.style.setProperty('--card-color-rgb', HEX_RGB_MAP[color] || '0,212,255');
 
-  card.innerHTML = `
-    <div class="mc-header">
-      <div class="mc-avatar">${initials}</div>
-      <div class="mc-identity">
-        <div class="mc-name">${escHtml(entry.name)}</div>
-        <div class="mc-role-badge">${escHtml(entry.role)}</div>
-        <span class="mc-year">${t('wall.yearFrom')} ${entry.year} · ${years} ${t('wall.yearServed')}</span>
+  cell.innerHTML = `
+    <div class="hex-outer">
+      <div class="hex-inner">
+        <div class="hex-content">
+          <div class="hex-avatar">${initials}</div>
+          <div class="hex-name">${escHtml(entry.name)}</div>
+          <div class="hex-role">${escHtml(entry.role)}</div>
+          <div class="hex-year">${t('wall.yearFrom')} ${entry.year}</div>
+        </div>
       </div>
     </div>
-    <button class="mc-menu-btn" aria-label="Menu" data-id="${entry.id}">···</button>
-    <div class="mc-menu" id="menu-${entry.id}">
-      <button class="mc-menu-item" data-action="view" data-id="${entry.id}">${t('wall.menuView')}</button>
-      <button class="mc-menu-item" data-action="edit" data-id="${entry.id}">${t('wall.menuEdit')}</button>
-      ${isMine ? `
-        <button class="mc-menu-item danger" data-action="delete" data-id="${entry.id}">${t('wall.menuDelete')}</button>
-      ` : ''}
-    </div>
-    <div class="mc-divider"></div>
-    ${entry.thank_you
-      ? `<div class="mc-thankyou">${escHtml(entry.thank_you)}</div>
-         <div class="mc-milestone-small">✦ ${escHtml(entry.milestone)}</div>`
-      : `<div class="mc-milestone">${escHtml(entry.milestone)}</div>`
-    }
   `;
 
-  // Click card body → open modal (không click menu)
-  card.addEventListener('click', (e) => {
-    if (e.target.closest('.mc-menu-btn') || e.target.closest('.mc-menu')) return;
-    openModal(entry);
-  });
+  cell.addEventListener('click', () => openModal(entry));
 
-  return card;
+  return cell;
 }
 
 /**
  * Prepend card mới lên đầu wall (sau khi submit).
  */
 function appendCardToWall(entry) {
-  const grid  = document.getElementById('wallGrid');
   const empty = document.getElementById('wallEmpty');
   empty.hidden = true;
 
-  const card = buildMiniCard(entry);
-  card.classList.add('new-card');
-  grid.prepend(card);
-
   _wallEntries.unshift(entry);
   _wallTotal++;
-  updateWallCount(_wallEntries.length, _wallTotal);
+
+  // Re-render để giữ đúng thứ tự row offset
+  renderThankYouWall(_wallEntries, _wallTotal);
+
+  // Highlight card vừa thêm
+  requestAnimationFrame(() => {
+    const card = document.querySelector(`.hex-cell[data-id="${entry.id}"]`);
+    if (card) card.classList.add('new-card');
+  });
 }
 
 /**
  * Scroll tới và highlight card trong wall.
  */
 function highlightCard(id) {
-  const card = document.querySelector(`.mini-card[data-id="${id}"]`);
+  const card = document.querySelector(`.hex-cell[data-id="${id}"]`);
   if (!card) return;
   card.scrollIntoView({ behavior: 'smooth', block: 'center' });
   card.classList.add('new-card');
@@ -275,7 +297,7 @@ function initInfiniteScroll() {
       const grid = document.getElementById('wallGrid');
       more.forEach(entry => {
         _wallEntries.push(entry);
-        grid.appendChild(buildMiniCard(entry));
+        _addHexCellToGrid(grid, entry);
       });
       updateWallCount(_wallEntries.length, _wallTotal);
     } finally {
